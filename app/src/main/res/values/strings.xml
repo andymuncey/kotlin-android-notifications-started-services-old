@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Reminders</string>
+    <string name="channelName">Reminders</string>
+    <string name="channelDescription">Reminders you\'ve added</string>
+</resources>
