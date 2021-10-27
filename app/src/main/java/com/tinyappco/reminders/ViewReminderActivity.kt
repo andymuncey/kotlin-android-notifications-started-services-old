@@ -2,15 +2,20 @@ package com.tinyappco.reminders
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_view_reminder.*
+import com.tinyappco.reminders.databinding.ActivityViewReminderBinding
+
 
 class ViewReminderActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityViewReminderBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_view_reminder)
+        binding = ActivityViewReminderBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        tvMessage.text = intent.getStringExtra("title") ?: ""
+        binding.tvMessage.text = intent.getStringExtra("title") ?: ""
 
     }
 }
