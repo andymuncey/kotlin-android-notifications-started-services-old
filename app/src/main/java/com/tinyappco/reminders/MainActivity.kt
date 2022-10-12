@@ -1,11 +1,14 @@
 package com.tinyappco.reminders
 
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import com.tinyappco.reminders.databinding.ActivityMainBinding
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -20,6 +23,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun scheduleAlert(view: View){
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            ActivityCompat.requestPermissions(this,arrayOf(android.Manifest.permission.POST_NOTIFICATIONS),1)
+        }
+
+
         val message = binding.etMessage.text.toString()
         val hours = binding.etHours.text.toString().toLongOrNull() ?: 0
         val mins = binding.etMinutes.text.toString().toLongOrNull() ?: 0

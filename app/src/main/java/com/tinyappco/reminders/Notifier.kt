@@ -10,7 +10,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 
-class Notifier(val context: Context) {
+class Notifier(private val context: Context) {
 
     init {
         createNotificationChannel()
@@ -57,7 +57,14 @@ class Notifier(val context: Context) {
         intent.putExtra("title",title)
 
         val requestCode = title.hashCode()
-        val pendingIntent = PendingIntent.getActivity(context,requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val flag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PendingIntent.FLAG_IMMUTABLE
+        } else {
+            PendingIntent.FLAG_UPDATE_CURRENT
+        }
+
+        val pendingIntent = PendingIntent.getActivity(context,requestCode, intent, flag)
 
         val builder = NotificationCompat.Builder(context, context.getString(R.string.channelName))
         builder.setSmallIcon(R.drawable.baseline_done_outline_black_18)
