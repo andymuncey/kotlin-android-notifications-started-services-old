@@ -59,9 +59,9 @@ class Notifier(private val context: Context) {
         val requestCode = title.hashCode()
 
         val flag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            PendingIntent.FLAG_IMMUTABLE
+            PendingIntent.FLAG_IMMUTABLE //any additional intent argument passed to the send methods to fill in unpopulated properties of this intent will be ignored
         } else {
-            PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_UPDATE_CURRENT //if the described PendingIntent already exists, then keep it but replace its extra data with what is in this new Intent
         }
 
         val pendingIntent = PendingIntent.getActivity(context,requestCode, intent, flag)
