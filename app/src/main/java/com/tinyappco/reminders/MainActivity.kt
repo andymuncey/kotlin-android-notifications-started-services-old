@@ -1,12 +1,15 @@
 package com.tinyappco.reminders
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.tinyappco.reminders.databinding.ActivityMainBinding
 
 
@@ -20,6 +23,24 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()){
+            permitted: Boolean ->
+            if (!permitted){
+                Toast.makeText(this,"Permission not granted, this app will not function", Toast.LENGTH_LONG).show()
+            }
+        }
+
+        if (ContextCompat.checkSelfPermission(this,android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED){
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+            }
+
+        }
+
+
+
     }
 
     fun scheduleAlert(view: View){
